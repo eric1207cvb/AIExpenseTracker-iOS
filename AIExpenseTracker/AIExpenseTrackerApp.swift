@@ -1,32 +1,11 @@
-//
-//  AIExpenseTrackerApp.swift
-//  AIExpenseTracker
-//
-//  Created by Hsueh Yi-An on 2025/9/2.
-//
-
 import SwiftUI
-import SwiftData
 
 @main
 struct AIExpenseTrackerApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView()   // <- 這裡要能找到 ContentView
         }
-        .modelContainer(sharedModelContainer)
     }
 }
+

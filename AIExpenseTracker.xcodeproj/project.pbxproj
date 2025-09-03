@@ -400,6 +400,10 @@
 				DEVELOPMENT_TEAM = 2RF44L5UDV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "我們需要您的相機權限，以便掃描收據或發票上的文字。";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "我們需要存取您的麥克風，以便進行語音記帳。";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "我們需要讀取您的相簿，以便您能選擇照片來辨識其中的文字。";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "我們需要您的語音權限，以便將您的消費記錄轉換為文字。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -432,6 +436,10 @@
 				DEVELOPMENT_TEAM = 2RF44L5UDV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "我們需要您的相機權限，以便掃描收據或發票上的文字。";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "我們需要存取您的麥克風，以便進行語音記帳。";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "我們需要讀取您的相簿，以便您能選擇照片來辨識其中的文字。";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "我們需要您的語音權限，以便將您的消費記錄轉換為文字。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

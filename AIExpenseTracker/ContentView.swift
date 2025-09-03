@@ -1,61 +1,64 @@
-//
-//  ContentView.swift
-//  AIExpenseTracker
-//
-//  Created by Hsueh Yi-An on 2025/9/2.
-//
-
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @StateObject private var vm = HomeViewModel()
+    @State private var editing: Transaction?
 
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                if vm.transactions.isEmpty {
+                    Text("目前沒有紀錄")
+                        .foregroundStyle(.secondary)
+                } else {
+                    ForEach(vm.transactions, id: \.id) { t in
+                        HStack(spacing: 12) {
+                            Image(systemName: t.category.sfSymbol)
+                                .frame(width: 24)
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(t.description)
+                                    .font(.headline)
+                                Text(t.date, style: .date)
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
+
+                            Spacer()
+
+                            Text("NT$ \(t.amount, specifier: "%.2f")")
+                                .font(.headline)
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture { editing = t }
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                vm.delete(id: t.id)
+                            } label: {
+                                Label("刪除", systemImage: "trash")
+                            }
+                        }
                     }
+                    .onDelete(perform: vm.deleteAtOffsets)
                 }
-                .onDelete(perform: deleteItems)
             }
+            .navigationTitle("花費")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        // 你可以換成彈出新增畫面；這裡先放一筆範例資料方便測
+                        vm.add(.sample)
+                    } label: {
+                        Image(systemName: "plus")
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+        .sheet(item: $editing) { t in
+            EditTransactionView(transaction: t) { updated in
+                vm.update(updated)
             }
         }
     }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
-}
